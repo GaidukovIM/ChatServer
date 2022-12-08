@@ -13,3 +13,9 @@ C:\Users\ivaga\source\repos\ChatServer\ChatServer\obj\Debug\net6.0\refint\ChatSe
 C:\Users\ivaga\source\repos\ChatServer\ChatServer\obj\Debug\net6.0\ChatServer.pdb
 C:\Users\ivaga\source\repos\ChatServer\ChatServer\obj\Debug\net6.0\ChatServer.genruntimeconfig.cache
 C:\Users\ivaga\source\repos\ChatServer\ChatServer\obj\Debug\net6.0\ref\ChatServer.dll
+C:\Users\ivaga\source\repos\ChatServer\ChatServer\bin\Debug\net6.0\System.Text.Encodings.Web.dll
+C:\Users\ivaga\source\repos\ChatServer\ChatServer\bin\Debug\net6.0\System.Text.Json.dll
+C:\Users\ivaga\source\repos\ChatServer\ChatServer\bin\Debug\net6.0\runtimes\browser\lib\net6.0\System.Text.Encodings.Web.dll
+C:\Users\ivaga\source\repos\ChatServer\ChatServer\bin\Debug\net6.0\ChatLibrary.dll
+C:\Users\ivaga\source\repos\ChatServer\ChatServer\bin\Debug\net6.0\ChatLibrary.pdb
+C:\Users\ivaga\source\repos\ChatServer\ChatServer\obj\Debug\net6.0\ChatServer.csproj.CopyComplete

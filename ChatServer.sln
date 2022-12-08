@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.3.32901.215
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatServer", "ChatServer\ChatServer.csproj", "{09E8BEE9-2CA2-4816-8260-6A815D02B86E}"
+	ProjectSection(ProjectDependencies) = postProject
+		{1CF83B81-B0F7-45B0-960F-4CDD7787D819} = {1CF83B81-B0F7-45B0-960F-4CDD7787D819}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatLibrary", "ChatLibrary\ChatLibrary.csproj", "{1CF83B81-B0F7-45B0-960F-4CDD7787D819}"
 EndProject

@@ -1,4 +1,6 @@
-﻿namespace ChatLibrary
+﻿using System.Text.Json;
+
+namespace ChatLibrary
 {
     public class MSG
     {
@@ -18,6 +20,26 @@
         public override string ToString()
         {
             return $"{timeOfGetting.GetDateTimeFormats()} {sender_name}: {text}";
+        }
+        public static List<MSG> GetAllMSGs(string jsonFileName)
+        {
+            List<MSG> msgs = new List<MSG>();
+            string s;
+            using(var reader=new StreamReader(jsonFileName))
+            {
+                s= reader.ReadToEnd();
+                if (s == "" || s == "{}") return msgs;
+            }
+            msgs = JsonSerializer.Deserialize<List<MSG>>(s);
+
+            return msgs;
+        }
+        public void WriteMsgToFile(string jsonFileName)
+        {
+            using(var writer=new StreamWriter(jsonFileName))
+            {
+                writer.Write(JsonSerializer.Serialize<MSG_Serialization>((MSG_Serialization)this));
+            }
         }
     }
 }

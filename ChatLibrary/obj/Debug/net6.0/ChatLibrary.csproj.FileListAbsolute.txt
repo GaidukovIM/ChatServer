@@ -1,0 +1,12 @@
+C:\Users\ivaga\source\repos\ChatServer\ChatLibrary\bin\Debug\net6.0\ChatLibrary.deps.json
+C:\Users\ivaga\source\repos\ChatServer\ChatLibrary\bin\Debug\net6.0\ChatLibrary.dll
+C:\Users\ivaga\source\repos\ChatServer\ChatLibrary\bin\Debug\net6.0\ChatLibrary.pdb
+C:\Users\ivaga\source\repos\ChatServer\ChatLibrary\obj\Debug\net6.0\ChatLibrary.csproj.AssemblyReference.cache
+C:\Users\ivaga\source\repos\ChatServer\ChatLibrary\obj\Debug\net6.0\ChatLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\ivaga\source\repos\ChatServer\ChatLibrary\obj\Debug\net6.0\ChatLibrary.AssemblyInfoInputs.cache
+C:\Users\ivaga\source\repos\ChatServer\ChatLibrary\obj\Debug\net6.0\ChatLibrary.AssemblyInfo.cs
+C:\Users\ivaga\source\repos\ChatServer\ChatLibrary\obj\Debug\net6.0\ChatLibrary.csproj.CoreCompileInputs.cache
+C:\Users\ivaga\source\repos\ChatServer\ChatLibrary\obj\Debug\net6.0\ChatLibrary.dll
+C:\Users\ivaga\source\repos\ChatServer\ChatLibrary\obj\Debug\net6.0\refint\ChatLibrary.dll
+C:\Users\ivaga\source\repos\ChatServer\ChatLibrary\obj\Debug\net6.0\ChatLibrary.pdb
+C:\Users\ivaga\source\repos\ChatServer\ChatLibrary\obj\Debug\net6.0\ref\ChatLibrary.dll

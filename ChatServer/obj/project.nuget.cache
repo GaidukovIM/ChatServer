@@ -1,8 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "zXmPOGU4ieBhrfZYstcif0jymNWSoL+5oXlUSUVomW3mjmqsAr1rTvth/7objj/MLT/YPQ0S3XBpITUswT6u1w==",
+  "dgSpecHash": "CgPqlDtJ5euO5I9jQ5+jLcg7LtSYQ+5BHVV0xtvXPLfzvkD7mFKx9lSaY5lAwz8UeXIb19mD6cmyjlWYHPUKHw==",
   "success": true,
   "projectFilePath": "C:\\Users\\ivaga\\source\\repos\\ChatServer\\ChatServer\\ChatServer.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\ivaga\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
+    "C:\\Users\\ivaga\\.nuget\\packages\\system.text.encodings.web\\7.0.0\\system.text.encodings.web.7.0.0.nupkg.sha512",
+    "C:\\Users\\ivaga\\.nuget\\packages\\system.text.json\\7.0.0\\system.text.json.7.0.0.nupkg.sha512"
+  ],
   "logs": []
 }
