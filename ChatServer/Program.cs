@@ -36,12 +36,15 @@ namespace ChatServer
                 {
                     builder.Append(Encoding.Unicode.GetString(buffer, 0, bytesRead));
                 }
-                string[] tmp = builder.ToString().Split(' ');
-                builder.Clear();
-                for(int i=3;i<tmp.Length;i++)
-                    builder.Append(tmp[i]);
-                new MSG(tmp[1]/*Sender*/, builder.ToString()/*Text*/, DateTime.Parse(tmp[0])).WriteMsgToFile(jsonFileName);
             }
+        }
+        static void GetMSG(StringBuilder builder)
+        {
+            string[] tmp = builder.ToString().Split(' ');
+            builder.Clear();
+            for (int i = 3; i < tmp.Length; i++)
+                builder.Append(tmp[i]);
+            new MSG(tmp[1]/*Sender*/, builder.ToString()/*Text*/, DateTime.Parse(tmp[0])).WriteMsgToFile(jsonFileName);
         }
     }
 }
