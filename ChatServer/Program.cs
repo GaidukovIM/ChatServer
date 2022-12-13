@@ -10,6 +10,7 @@ namespace ChatServer
     internal class Program
     {
         const string jsonFileName = "MSGs.txt";
+        static List<MSG> msgs = new List<MSG>();
         static void Main(string[] args)
         {
             const string ip="127.0.0.1";
@@ -20,21 +21,37 @@ namespace ChatServer
             var t = new Thread(new ParameterizedThreadStart(Accept));
             t.IsBackground = true;
             t.Start((object)serverSocket);
-            List<MSG> msgs = MSG.GetAllMSGs(jsonFileName);
+            msgs = MSG.GetAllMSGs(jsonFileName);
 
+        }
+        static StringBuilder GetStringFromListener(Socket listener)
+        {
+            int bytesRead;
+            byte[] buffer = new byte[1024];
+            StringBuilder builder = new StringBuilder();
+            while ((bytesRead = listener.Receive(buffer)) > 0)
+            {
+                builder.Append(Encoding.Unicode.GetString(buffer, 0, bytesRead));
+            }
+            return builder;
         }
         static void Accept(object obj)
         {
             Socket serverSocket = (Socket)obj;
+            var listener = serverSocket.Accept();
             while(true)
             {
                 Thread.Sleep(1000);
-                int bytesRead;
-                byte[] buffer = new byte[1024];
-                StringBuilder builder=new StringBuilder();
-                while((bytesRead= serverSocket.Receive(buffer)) > 0)
+                StringBuilder builder = GetStringFromListener(listener);
+                if(builder.ToString()=="New_MSG")
                 {
-                    builder.Append(Encoding.Unicode.GetString(buffer, 0, bytesRead));
+                    listener.Send(Encoding.UTF8.GetBytes("OK"));
+                    GetMSG(GetStringFromListener((Socket)listener));
+                }
+                if(builder.ToString()=="Get_MSGs")
+                {
+                    foreach (var msg in msgs)
+                        listener.Send(Encoding.UTF8.GetBytes(msg.ToString()));
                 }
             }
         }
