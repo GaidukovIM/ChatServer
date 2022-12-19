@@ -15,6 +15,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using ChatLibrary;
+using System.Threading;
+using System.ComponentModel;
 
 namespace Client
 {
@@ -29,17 +31,33 @@ namespace Client
         List<MSG> msgs;
         public ClientWindow()
         {
+            Closing += stop;
             InitializeComponent();
             msgs= new List<MSG>();
             ClientEndPoint = new IPEndPoint(IPAddress.Parse(ip), 51000);
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             clientSocket.Connect(ClientEndPoint);
+            Thread ThreadForGettingMSGs = new Thread(new ParameterizedThreadStart(GettingThread));
+            ThreadForGettingMSGs.IsBackground = true;
+            ThreadForGettingMSGs.Start(clientSocket);
+        }
+        private void stop(object obj,CancelEventArgs e)
+        {
+            clientSocket.Shutdown(SocketShutdown.Both);
+            clientSocket.Close();
+        }
+        private void GettingThread(object obj)
+        {
+            var clientSocket= (Socket)obj;
 
         }
-
         private void buttonSend_Click(object sender, RoutedEventArgs e)
         {
-
+            clientSocket.Send(Encoding.UTF8.GetBytes("New_MSG"));
+            clientSocket.Accept();
+            string s = $"{DateTime.Now.ToString()} {TextBoxNick.Text}: {TextBoxMSGText.Text}";
+            clientSocket.Send(Encoding.UTF8.GetBytes(s));
+            TextBoxMSGText.Text = "";
         }
     }
 }

@@ -19,7 +19,7 @@ namespace ChatServer
             serverSocket.Bind(serverEndPoint);
             serverSocket.Listen(10);
             var t = new Thread(new ParameterizedThreadStart(Accept));
-            t.IsBackground = true;
+            //t.IsBackground = true;
             t.Start((object)serverSocket);
             msgs = MSG.GetAllMSGs(jsonFileName);
 
@@ -46,7 +46,7 @@ namespace ChatServer
                 if(builder.ToString()=="New_MSG")
                 {
                     listener.Send(Encoding.UTF8.GetBytes("OK"));
-                    GetMSG(GetStringFromListener((Socket)listener));
+                    GetMSG(GetStringFromListener((Socket)listener)).WriteMsgToFile(jsonFileName); ;
                 }
                 if(builder.ToString()=="Get_MSGs")
                 {
@@ -55,13 +55,13 @@ namespace ChatServer
                 }
             }
         }
-        static void GetMSG(StringBuilder builder)
+        static MSG GetMSG(StringBuilder builder)
         {
             string[] tmp = builder.ToString().Split(' ');
             builder.Clear();
-            for (int i = 3; i < tmp.Length; i++)
+            for (int i = 2; i < tmp.Length; i++)
                 builder.Append(tmp[i]);
-            new MSG(tmp[1]/*Sender*/, builder.ToString()/*Text*/, DateTime.Parse(tmp[0])).WriteMsgToFile(jsonFileName);
+            return new MSG(tmp[1]/*Sender*/, builder.ToString()/*Text*/, DateTime.Parse(tmp[0]));
         }
     }
 }
