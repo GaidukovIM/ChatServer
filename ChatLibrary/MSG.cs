@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Text;
+using System.Text.Json;
 
 namespace ChatLibrary
 {
@@ -40,6 +41,14 @@ namespace ChatLibrary
             {
                 writer.Write(JsonSerializer.Serialize<MSG_Serialization>((MSG_Serialization)this));
             }
+        }
+        public static MSG GetMSG(StringBuilder builder)
+        {
+            string[] tmp = builder.ToString().Split(' ');
+            builder.Clear();
+            for (int i = 2; i < tmp.Length; i++)
+                builder.Append(tmp[i]);
+            return new MSG(tmp[1]/*Sender*/, builder.ToString()/*Text*/, DateTime.Parse(tmp[0]));
         }
     }
 }
