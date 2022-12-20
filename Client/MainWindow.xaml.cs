@@ -53,11 +53,21 @@ namespace Client
         }
         private void buttonSend_Click(object sender, RoutedEventArgs e)
         {
-            clientSocket.Send(Encoding.UTF8.GetBytes("New_MSG"));
-            clientSocket.Accept();
-            string s = $"{DateTime.Now.ToString()} {TextBoxNick.Text}: {TextBoxMSGText.Text}";
-            clientSocket.Send(Encoding.UTF8.GetBytes(s));
-            TextBoxMSGText.Text = "";
+            clientSocket.Send(Encoding.Unicode.GetBytes("New_MSG"));
+            int bytesRead;
+            byte[] buffer = new byte[1024];
+            StringBuilder builder = new StringBuilder();
+            do
+            {
+                bytesRead = clientSocket.Receive(buffer);
+                builder.Append(Encoding.Unicode.GetString(buffer, 0, bytesRead));
+            } while (clientSocket.Available>0);
+            if(builder.ToString() == "OK")
+            {
+                string s = $"{DateTime.Now.ToString()} {TextBoxNick.Text}: {TextBoxMSGText.Text}";
+                clientSocket.Send(Encoding.Unicode.GetBytes(s));
+                TextBoxMSGText.Text = "";
+            }
         }
     }
 }

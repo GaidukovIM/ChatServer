@@ -50,13 +50,13 @@ namespace ChatServer
                 StringBuilder builder = GetStringFromListener(listener);
                 if(builder.ToString()=="New_MSG")
                 {
-                    listener.Send(Encoding.UTF8.GetBytes("OK"));
+                    listener.Send(Encoding.Unicode.GetBytes("OK"));
                     MSG.GetMSG(GetStringFromListener((Socket)listener)).WriteMsgToFile(jsonFileName); ;
                 }
                 if(builder.ToString()=="Get_MSGs")
                 {
                     foreach (var msg in msgs)
-                        listener.Send(Encoding.UTF8.GetBytes(msg.ToString()+"\n"));
+                        listener.Send(Encoding.Unicode.GetBytes(msg.ToString()+"\n"));
                 }
             }
         }
