@@ -11,18 +11,23 @@ namespace ChatServer
     {
         const string jsonFileName = "MSGs.txt";
         static List<MSG> msgs = new List<MSG>();
+        static Socket serverSocket;
         static void Main(string[] args)
         {
+            Console.CancelKeyPress += Console_CancelKeyPress;
             const string ip="127.0.0.1";
             var serverEndPoint = new IPEndPoint(IPAddress.Parse(ip),51000);
-            var serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
+            serverSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             serverSocket.Bind(serverEndPoint);
             serverSocket.Listen(10);
             var t = new Thread(new ParameterizedThreadStart(Accept));
-            //t.IsBackground = true;
             t.Start((object)serverSocket);
             msgs = MSG.GetAllMSGs(jsonFileName);
-
+        }
+        static void Console_CancelKeyPress(object obj,ConsoleCancelEventArgs e)
+        {
+            serverSocket.Shutdown(SocketShutdown.Both);
+            serverSocket.Close();
         }
         static StringBuilder GetStringFromListener(Socket listener)
         {
@@ -51,7 +56,7 @@ namespace ChatServer
                 if(builder.ToString()=="Get_MSGs")
                 {
                     foreach (var msg in msgs)
-                        listener.Send(Encoding.UTF8.GetBytes(msg.ToString()));
+                        listener.Send(Encoding.UTF8.GetBytes(msg.ToString()+"\n"));
                 }
             }
         }
