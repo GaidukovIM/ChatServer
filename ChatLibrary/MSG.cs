@@ -20,7 +20,7 @@ namespace ChatLibrary
         }
         public override string ToString()
         {
-            return $"{timeOfGetting.GetDateTimeFormats()} {sender_name}: {text}";
+            return $"{timeOfGetting.ToString()} {sender_name}: {text}";
         }
         public static List<MSG> GetAllMSGs(string jsonFileName)
         {
@@ -44,11 +44,12 @@ namespace ChatLibrary
         }
         public static MSG GetMSG(StringBuilder builder)
         {
+            string s = builder.ToString();
             string[] tmp = builder.ToString().Split(' ');
             builder.Clear();
-            for (int i = 2; i < tmp.Length; i++)
+            for (int i = 3; i < tmp.Length; i++)
                 builder.Append(tmp[i]);
-            return new MSG(tmp[1]/*Sender*/, builder.ToString()/*Text*/, DateTime.Parse(tmp[0]));
+            return new MSG(tmp[2]/*Sender*/, builder.ToString()/*Text*/, DateTime.Parse($"{tmp[0]} {tmp[1]}"));
         }
     }
 }

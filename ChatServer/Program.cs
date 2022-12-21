@@ -21,7 +21,7 @@ namespace ChatServer
             serverSocket.Bind(serverEndPoint);
             serverSocket.Listen(10);
             var t = new Thread(new ParameterizedThreadStart(Accept));
-            t.Start((object)serverSocket);
+            t.Start(serverSocket.Accept());
             msgs = MSG.GetAllMSGs(jsonFileName);
         }
         static void Console_CancelKeyPress(object obj,ConsoleCancelEventArgs e)
@@ -31,32 +31,35 @@ namespace ChatServer
         }
         static StringBuilder GetStringFromListener(Socket listener)
         {
-            int bytesRead;
             byte[] buffer = new byte[1024];
+            int bytesRead;
             StringBuilder builder = new StringBuilder();
-            while ((bytesRead = listener.Receive(buffer)) > 0)
+            do
             {
-                builder.Append(Encoding.Unicode.GetString(buffer, 0, bytesRead));
-            }
+                bytesRead = listener.Receive(buffer);
+                builder.Append(Encoding.UTF8.GetString(buffer, 0, bytesRead));
+            } while (listener.Available > 0);
             return builder;
         }
         static void Accept(object obj)
         {
-            Socket serverSocket = (Socket)obj;
-            var listener = serverSocket.Accept();
-            while(true)
+            var listener = (Socket)obj;
+            while (true)
             {
                 Thread.Sleep(1000);
                 StringBuilder builder = GetStringFromListener(listener);
-                if(builder.ToString()=="New_MSG")
-                {
-                    listener.Send(Encoding.Unicode.GetBytes("OK"));
-                    MSG.GetMSG(GetStringFromListener((Socket)listener)).WriteMsgToFile(jsonFileName); ;
-                }
                 if(builder.ToString()=="Get_MSGs")
                 {
+                    StringBuilder tmp=new StringBuilder();
                     foreach (var msg in msgs)
-                        listener.Send(Encoding.Unicode.GetBytes(msg.ToString()+"\n"));
+                        tmp.Append(msg.ToString()+"\n");
+                        listener.Send(Encoding.UTF8.GetBytes(tmp.ToString()));
+                }
+                else
+                {
+                    //MSG.GetMSG(GetStringFromListener(listener)).WriteMsgToFile(jsonFileName);
+                    Console.WriteLine(MSG.GetMSG(builder).ToString());
+                    listener.Send(Encoding.UTF8.GetBytes("done"));
                 }
             }
         }

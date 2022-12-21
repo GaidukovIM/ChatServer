@@ -37,37 +37,35 @@ namespace Client
             ClientEndPoint = new IPEndPoint(IPAddress.Parse(ip), 51000);
             clientSocket = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp);
             clientSocket.Connect(ClientEndPoint);
-            Thread ThreadForGettingMSGs = new Thread(new ParameterizedThreadStart(GettingThread));
-            ThreadForGettingMSGs.IsBackground = true;
-            ThreadForGettingMSGs.Start(clientSocket);
         }
         private void stop(object obj,CancelEventArgs e)
         {
             clientSocket.Shutdown(SocketShutdown.Both);
             clientSocket.Close();
         }
-        private void GettingThread(object obj)
+        static StringBuilder GetStringFromListener(Socket listener)
         {
-            var clientSocket= (Socket)obj;
-
-        }
-        private void buttonSend_Click(object sender, RoutedEventArgs e)
-        {
-            clientSocket.Send(Encoding.Unicode.GetBytes("New_MSG"));
-            int bytesRead;
             byte[] buffer = new byte[1024];
+            int bytesRead;
             StringBuilder builder = new StringBuilder();
             do
             {
-                bytesRead = clientSocket.Receive(buffer);
-                builder.Append(Encoding.Unicode.GetString(buffer, 0, bytesRead));
-            } while (clientSocket.Available>0);
-            if(builder.ToString() == "OK")
-            {
-                string s = $"{DateTime.Now.ToString()} {TextBoxNick.Text}: {TextBoxMSGText.Text}";
-                clientSocket.Send(Encoding.Unicode.GetBytes(s));
-                TextBoxMSGText.Text = "";
-            }
+                bytesRead = listener.Receive(buffer);
+                builder.Append(Encoding.UTF8.GetString(buffer, 0, bytesRead));
+            } while (listener.Available > 0);
+            return builder;
+        }
+        private void buttonSend_Click(object sender, RoutedEventArgs e)
+        {
+            string s = $"{DateTime.Now.ToString()} {TextBoxNick.Text} {TextBoxMSGText.Text}";
+            clientSocket.Send(Encoding.UTF8.GetBytes(s));
+            TextBoxMSGText.Text = "";
+            MessageBox.Show(GetStringFromListener(clientSocket).ToString());
+        }
+
+        private void ButtonGet_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
