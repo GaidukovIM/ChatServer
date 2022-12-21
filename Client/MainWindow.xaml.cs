@@ -53,6 +53,19 @@ namespace Client
 
         private void ButtonGet_Click(object sender, RoutedEventArgs e)
         {
+            clientSocket.Send(Encoding.UTF8.GetBytes("Get_MSGs"));
+            StringBuilder tmp = new StringBuilder();
+            foreach (var msg in Utils.GetStringFromListener(clientSocket).ToString().Split('\n'))
+            {
+                tmp.Append(msg);
+                if (tmp.ToString() != "")
+                {
+                    MSG m = MSG.GetMSG(tmp);
+                    msgs.Add(m);
+                    ListBoxChat.Items.Add(m);
+                }
+                tmp.Clear();
+            }
 
         }
     }

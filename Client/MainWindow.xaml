@@ -7,11 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="TextBoxChat" HorizontalAlignment="Left" Margin="169,102,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="373" Height="185"/>
         <Button x:Name="buttonSend" Content="Send" HorizontalAlignment="Left" Margin="674,249,0,0" VerticalAlignment="Top" Click="buttonSend_Click"/>
         <TextBox x:Name="TextBoxMSGText" HorizontalAlignment="Left" Margin="639,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <TextBox x:Name="TextBoxNick" HorizontalAlignment="Left" Margin="594,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Button x:Name="ButtonGet" Content="Get" Margin="678,345,82,0" VerticalAlignment="Top" Click="ButtonGet_Click"/>
+        <ListBox x:Name="ListBoxChat" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="49,70,443,63"/>
 
     </Grid>
 </Window>
