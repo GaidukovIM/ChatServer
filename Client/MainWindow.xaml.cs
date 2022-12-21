@@ -43,24 +43,12 @@ namespace Client
             clientSocket.Shutdown(SocketShutdown.Both);
             clientSocket.Close();
         }
-        static StringBuilder GetStringFromListener(Socket listener)
-        {
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            StringBuilder builder = new StringBuilder();
-            do
-            {
-                bytesRead = listener.Receive(buffer);
-                builder.Append(Encoding.UTF8.GetString(buffer, 0, bytesRead));
-            } while (listener.Available > 0);
-            return builder;
-        }
         private void buttonSend_Click(object sender, RoutedEventArgs e)
         {
             string s = $"{DateTime.Now.ToString()} {TextBoxNick.Text} {TextBoxMSGText.Text}";
             clientSocket.Send(Encoding.UTF8.GetBytes(s));
             TextBoxMSGText.Text = "";
-            MessageBox.Show(GetStringFromListener(clientSocket).ToString());
+            MessageBox.Show(Utils.GetStringFromListener(clientSocket).ToString());
         }
 
         private void ButtonGet_Click(object sender, RoutedEventArgs e)

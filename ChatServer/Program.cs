@@ -31,25 +31,13 @@ namespace ChatServer
             serverSocket.Shutdown(SocketShutdown.Both);
             serverSocket.Close();
         }
-        static StringBuilder GetStringFromListener(Socket listener)
-        {
-            byte[] buffer = new byte[1024];
-            int bytesRead;
-            StringBuilder builder = new StringBuilder();
-            do
-            {
-                bytesRead = listener.Receive(buffer);
-                builder.Append(Encoding.UTF8.GetString(buffer, 0, bytesRead));
-            } while (listener.Available > 0);
-            return builder;
-        }
         static void Accept(object obj)
         {
             var listener = (Socket)obj;
             while (true)
             {
                 Thread.Sleep(1000);
-                StringBuilder builder = GetStringFromListener(listener);
+                StringBuilder builder = Utils.GetStringFromListener(listener);
                 if(builder.ToString()=="Get_MSGs")
                 {
                     StringBuilder tmp=new StringBuilder();
