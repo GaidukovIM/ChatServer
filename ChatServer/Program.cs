@@ -21,8 +21,10 @@ namespace ChatServer
             serverSocket.Bind(serverEndPoint);
             serverSocket.Listen(10);
             var t = new Thread(new ParameterizedThreadStart(Accept));
-            t.Start(serverSocket.Accept());
             msgs = MSG.GetAllMSGs(jsonFileName);
+            foreach (var msg in msgs)
+                Console.WriteLine(msg.ToString());
+            t.Start(serverSocket.Accept());
         }
         static void Console_CancelKeyPress(object obj,ConsoleCancelEventArgs e)
         {
@@ -57,9 +59,11 @@ namespace ChatServer
                 }
                 else
                 {
-                    //MSG.GetMSG(GetStringFromListener(listener)).WriteMsgToFile(jsonFileName);
-                    Console.WriteLine(MSG.GetMSG(builder).ToString());
-                    listener.Send(Encoding.UTF8.GetBytes("done"));
+                    if (builder.ToString() != "")
+                    {
+                        MSG.GetMSG(builder).WriteMsgToFile(jsonFileName);
+                        listener.Send(Encoding.UTF8.GetBytes("got_msg"));
+                    }
                 }
             }
         }

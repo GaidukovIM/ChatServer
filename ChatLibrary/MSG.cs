@@ -28,18 +28,19 @@ namespace ChatLibrary
             string s;
             using(var reader=new StreamReader(jsonFileName))
             {
-                s= reader.ReadToEnd();
-                if (s == "" || s == "{}") return msgs;
+                while ((s = reader.ReadLine()) != null)
+                {
+                    if (s == "" || s == "{}") return msgs;
+                    msgs.Add((MSG)JsonSerializer.Deserialize<MSG_Serialization>(s));
+                }
             }
-            msgs = JsonSerializer.Deserialize<List<MSG>>(s);
-
             return msgs;
         }
         public void WriteMsgToFile(string jsonFileName)
         {
-            using(var writer=new StreamWriter(jsonFileName))
+            using(var writer=new StreamWriter(jsonFileName,true))
             {
-                writer.Write(JsonSerializer.Serialize<MSG_Serialization>((MSG_Serialization)this));
+                writer.WriteLine(JsonSerializer.Serialize<MSG_Serialization>((MSG_Serialization)this));
             }
         }
         public static MSG GetMSG(StringBuilder builder)
@@ -48,8 +49,8 @@ namespace ChatLibrary
             string[] tmp = builder.ToString().Split(' ');
             builder.Clear();
             for (int i = 3; i < tmp.Length; i++)
-                builder.Append(tmp[i]);
-            return new MSG(tmp[2]/*Sender*/, builder.ToString()/*Text*/, DateTime.Parse($"{tmp[0]} {tmp[1]}"));
+                builder.Append($"{tmp[i]} ");
+                return new MSG(tmp[2]/*Sender*/, builder.ToString()/*Text*/, DateTime.Parse($"{tmp[0]} {tmp[1]}"));
         }
     }
 }
